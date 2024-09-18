@@ -1,0 +1,19 @@
+.to-do-list{
+  front-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: "center";
+  padding: 10px;
+  font-size: 40px;
+  font-weight: bold;
+  color: black;}
+
+ol{
+  front-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: "center";
+  padding: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  color: black;}
+
+li{
+  list-style-position: inside;
+}
