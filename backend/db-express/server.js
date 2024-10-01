@@ -40,6 +40,6 @@ app.delete("/todos", async (req, res) => {
     res.send([])
 })
 
-app.listen(port, () => { console.log("Server läuft auf Port 3000") })
+app.listen(port, () => { console.log("server running on http://localhost:3001") })
 
 

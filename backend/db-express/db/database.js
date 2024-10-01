@@ -48,15 +48,13 @@ export function getTodosFromDB(db) {
 }
 
 export function addTodoToDB(db, task) {
-    const query = 'INSERT INTO todos (task) VALUES (?)';
-    return new Promise((resolve, reject) => {
-        db.run(query, [task], function(err) {
-            if (err) {
-                console.error('Error inserting todo:', err.message);
-                reject(err);
-            } else {
-                resolve({ id: this.lastID, task });
-            }
-        });
+    const query = `INSERT INTO todos (task) VALUES (?)`;
+
+    // Using a parameterized query to safely insert the task
+    db.run(query, [task], function(err) {
+        if (err) {
+            return console.error('Error inserting task: ', err.message);
+        }
+        console.log(`A new task has been added with ID: ${this.lastID}`);
     });
 }

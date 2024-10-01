@@ -5,6 +5,26 @@ function App() {
     const [texts, setTexts] = useState([]);
     const [input, setInput] = useState("");
 
+    const handleloadTodos = async () => {
+        try {
+            const response = await fetch("http://localhost:3001/todos");
+            if (!response.ok) {
+                throw new Error("Something went wrong");
+            }
+            const data = await response.json();
+            setTexts(data.map((todo, index) => ({id: index, text: todo})))
+            console.log(data)
+        } catch (error) {
+            console.error("Error fetching todos:", error);
+        }
+    };
+
+useEffect(() => {
+    handleloadTodos(); 
+}, []);
+
+    
+
     const handleChange = (e) => {
         setInput(e.target.value);
     };
@@ -14,7 +34,7 @@ function App() {
         console.log("Text Clear");
     };
 
-    const handleAddTodo = () => {
+    const  handleAddTodo = async() => {
         const newTodo = {
             id: Date.now(),
             text: input,
@@ -22,15 +42,26 @@ function App() {
         }
         setTexts([...texts, newTodo]);
         setInput(""); //clear input
-        fetch("//localhost:3001/todos", {
+
+    try{
+        const response =  await fetch("http://localhost:3001/todos", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ todo: input, done: 0 })
-        })
-    };
+        });
+        if(!response.ok){
+            throw new Error("Unexpected status code: " + response.status);
+        }
+    
+         const data = await response.json();
+         console.log("Todo added successfully:", data);
+    }catch(error){
+        console.error("Error adding todo:", error);
+    }
 
+    };
     const handleClearTodo = () => {
         setTexts([]);
     };
